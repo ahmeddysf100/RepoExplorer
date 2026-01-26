@@ -13,24 +13,8 @@ import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
 import ForkRightIcon from '@mui/icons-material/ForkRight'
 import { Link as RouterLink } from 'react-router-dom'
 import type { Repo } from '@/core/types/repo.types'
-
-const LANGUAGE_COLORS: Record<string, string> = {
-  JavaScript: '#facc15',
-  TypeScript: '#2563eb',
-  CSS: '#3b82f6',
-  Python: '#16a34a',
-  C: '#94a3b8',
-}
-
-function langColor(lang: string | null): string {
-  if (!lang) return 'grey.500'
-  return LANGUAGE_COLORS[lang] ?? '#94a3b8'
-}
-
-function formatCount(n: number): string {
-  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`
-  return String(n)
-}
+import { langColor } from '@/core'
+import { formatCount } from '@/shared/utils/format'
 
 interface RepoCardProps {
   repo: Repo
@@ -44,7 +28,7 @@ export function RepoCard({ repo }: RepoCardProps) {
       variant="outlined"
       sx={{
         height: '100%',
-        borderRadius: 3,
+        borderRadius: 1,
         borderColor: 'divider',
         transition: 'all 0.2s',
         '&:hover': {
@@ -79,6 +63,11 @@ export function RepoCard({ repo }: RepoCardProps) {
                   fontSize: '1.125rem',
                   color: 'text.primary',
                   '&:hover': { color: 'primary.main' },
+                  display: 'inline-block',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  maxWidth: '250px',
                 }}
               >
                 {repo.full_name}
