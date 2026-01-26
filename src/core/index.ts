@@ -1,3 +1,4 @@
 export { useSearchStore } from './stores/searchStore'
-export { searchRepos } from './api/github.api'
-export type { Repo, SearchReposResponse } from './types/repo.types'
+export { useThemeStore } from './stores/themeStore'
+export { searchRepos, getGitHubApiErrorMessage } from './api/github.api'
+export type { Repo, SearchReposResponse, SortOption } from './types/repo.types'

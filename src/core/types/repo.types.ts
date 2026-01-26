@@ -7,11 +7,14 @@ export interface Repo {
   stargazers_count: number
   forks_count: number
   language: string | null
+  topics?: string[]
   owner: {
     login: string
     avatar_url: string
   }
 }
+
+export type SortOption = 'best' | 'stars' | 'stars-asc' | 'forks' | 'forks-asc' | 'updated'
 
 export interface SearchReposResponse {
   total_count: number

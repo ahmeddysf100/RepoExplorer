@@ -1,8 +1,12 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Navigate } from 'react-router-dom'
 import { Box, Typography } from '@mui/material'
 
 export function RepoDetailPage() {
-  const { owner, name } = useParams<{ owner: string; name: string }>()
+  const { owner, name } = useParams()
+
+  if (!owner || !name) {
+    return <Navigate to="/search" replace />
+  }
 
   return (
     <Box>
