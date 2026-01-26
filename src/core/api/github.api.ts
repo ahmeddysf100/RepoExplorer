@@ -81,7 +81,13 @@ export async function getRepoReadme(
     const content = (data as { content?: string }).content
     if (!content) return null
     try {
-      return atob(content.replace(/\n/g, ''))
+      // Decode base64 and properly handle UTF-8 encoding
+      const binaryString = atob(content.replace(/\n/g, ''))
+      const bytes = new Uint8Array(binaryString.length)
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i)
+      }
+      return new TextDecoder('utf-8').decode(bytes)
     } catch {
       return null
     }
