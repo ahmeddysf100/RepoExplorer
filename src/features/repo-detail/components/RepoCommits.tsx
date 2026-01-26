@@ -2,6 +2,7 @@ import { Avatar, Box, Card, Link, Typography } from '@mui/material'
 import HistoryIcon from '@mui/icons-material/History'
 import { formatRelativeTime } from '@/shared/utils/format'
 import type { CommitItem } from '@/core/types/repo.types'
+import { config } from '@/shared/config'
 
 interface RepoCommitsProps {
   commits: CommitItem[]
@@ -10,7 +11,8 @@ interface RepoCommitsProps {
 }
 
 export function RepoCommits({ commits, owner, name }: RepoCommitsProps) {
-  const commitsUrl = `https://github.com/${owner}/${name}/commits`
+  const { baseUrl } = config.github
+  const commitsUrl = `${baseUrl}/${owner}/${name}/commits`
 
   return (
     <Card
@@ -57,7 +59,7 @@ export function RepoCommits({ commits, owner, name }: RepoCommitsProps) {
             <Box
               key={c.sha}
               component="a"
-              href={`https://github.com/${owner}/${name}/commit/${c.sha}`}
+              href={`${baseUrl}/${owner}/${name}/commit/${c.sha}`}
               target="_blank"
               rel="noopener noreferrer"
               sx={{

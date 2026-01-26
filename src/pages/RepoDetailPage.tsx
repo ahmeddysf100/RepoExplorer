@@ -30,6 +30,7 @@ import {
   RepoLanguages,
   RepoCommits,
 } from '@/features/repo-detail'
+import { config } from '@/shared/config'
 
 export function RepoDetailPage() {
   const { owner, name } = useParams()
@@ -49,8 +50,8 @@ export function RepoDetailPage() {
     Promise.all([
       getRepo(owner, name),
       getRepoReadme(owner, name),
-      getRepoCommits(owner, name, 5),
-      getRepoContributors(owner, name, 5),
+      getRepoCommits(owner, name, config.repoCommitsPerPage),
+      getRepoContributors(owner, name, config.repoContributorsPerPage),
       getRepoLanguages(owner, name),
     ])
       .then(([r, rm, cm, co, lg]) => {
@@ -72,8 +73,8 @@ export function RepoDetailPage() {
   }, [owner, name])
 
   useEffect(() => {
-    if (owner && name) document.title = `${owner}/${name} — RepoExplorer`
-    return () => { document.title = 'RepoExplorer - GitHub Repository Explorer' }
+    if (owner && name) document.title = `${owner}/${name} — ${config.appName}`
+    return () => { document.title = config.appTitleDefault }
   }, [owner, name])
 
   if (!owner || !name) return <Navigate to="/search" replace />
@@ -100,8 +101,9 @@ export function RepoDetailPage() {
   }
 
   const defaultBranch = repo.default_branch ?? 'main'
-  const readmeUrl = `https://github.com/${owner}/${name}/blob/${defaultBranch}/README.md`
-  const contributorsUrl = `https://github.com/${owner}/${name}/graphs/contributors`
+  const { baseUrl } = config.github
+  const readmeUrl = `${baseUrl}/${owner}/${name}/blob/${defaultBranch}/README.md`
+  const contributorsUrl = `${baseUrl}/${owner}/${name}/graphs/contributors`
   const topics = repo.topics ?? []
 
   return (
@@ -135,7 +137,7 @@ export function RepoDetailPage() {
             <Box>
               <Typography variant="body2" color="text.secondary">
                 <Link
-                  href={`https://github.com/${owner}`}
+                  href={`${baseUrl}/${owner}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   underline="hover"

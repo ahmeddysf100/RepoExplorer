@@ -1,5 +1,6 @@
 import { TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import { config } from '@/shared/config'
 
 interface SearchInputProps {
   value: string
@@ -13,7 +14,7 @@ export function SearchInput({
   value,
   onChange,
   onKeyDown,
-  placeholder = 'Search for repositories (e.g. facebook/react)...',
+  placeholder = config.searchPlaceholder,
   disabled = false,
 }: SearchInputProps) {
   return (

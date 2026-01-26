@@ -51,7 +51,13 @@ export function SearchHero({
           gap: 2,
         }}
       >
-        <Box sx={{ flex: 1, maxWidth: 600 }}>
+        <Box
+          sx={{
+            flex: 1,
+            maxWidth: { xs: '100%', md: 600 }, // 100% width on xs/sm, 600px on md+
+           
+          }}
+        >
           <SearchInput
             value={query}
             onChange={setQuery}
