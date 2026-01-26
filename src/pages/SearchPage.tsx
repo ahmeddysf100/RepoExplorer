@@ -17,11 +17,7 @@ import {
   getGitHubApiErrorMessage,
   type SortOption,
 } from '@/core'
-
-const DEBOUNCE_MS = 500
-const PER_PAGE = 12
-const MAX_SEARCH_RESULTS = 1000
-const MAX_SEARCH_PAGE = Math.floor(MAX_SEARCH_RESULTS / PER_PAGE)
+import { config, maxSearchPage } from '@/shared/config'
 
 export function SearchPage() {
   const {
@@ -40,7 +36,7 @@ export function SearchPage() {
     sortOption,
     setSortOption,
   } = useSearchStore()
-  const debouncedQuery = useDebounce(query, DEBOUNCE_MS)
+  const debouncedQuery = useDebounce(query, config.debounceMs)
 
   const runSearch = useCallback(
     (q: string, p: number = page, s: SortOption = sortOption) => {
@@ -53,12 +49,12 @@ export function SearchPage() {
       setError(null)
       searchRepos(q, {
         sortOption: s,
-        page: Math.min(Math.max(1, p), MAX_SEARCH_PAGE),
-        per_page: PER_PAGE,
+        page: Math.min(Math.max(1, p), maxSearchPage),
+        per_page: config.searchPerPage,
       })
         .then((res) => {
           setRepos(res.items)
-          setTotalCount(Math.min(res.total_count, MAX_SEARCH_RESULTS))
+          setTotalCount(Math.min(res.total_count, config.maxSearchResults))
         })
         .catch((e) => {
           setError(getGitHubApiErrorMessage(e))
@@ -111,15 +107,14 @@ export function SearchPage() {
           color="text.primary"
           sx={{ mb: 2, fontSize: { xs: '2rem', md: '2.5rem' } }}
         >
-          Search Repositories
+          {config.searchHeroTitle}
         </Typography>
         <Typography
           variant="body1"
           color="text.secondary"
           sx={{ mb: 4, maxWidth: 600, mx: 'auto' }}
         >
-          Explore over 200 million public repositories on GitHub. Find projects,
-          developers, and code easily.
+          {config.searchHeroSubtitle}
         </Typography>
         <SearchHero
           query={query}
@@ -161,13 +156,13 @@ export function SearchPage() {
               </Grid>
             ))}
           </Grid>
-          {Math.ceil(totalCount / PER_PAGE) > 1 && (
+          {Math.ceil(totalCount / config.searchPerPage) > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
               <SearchPagination
-                page={Math.min(page, MAX_SEARCH_PAGE)}
+                page={Math.min(page, maxSearchPage)}
                 totalCount={totalCount}
-                perPage={PER_PAGE}
-                maxPages={MAX_SEARCH_PAGE}
+                perPage={config.searchPerPage}
+                maxPages={maxSearchPage}
                 onPageChange={setPage}
               />
             </Box>

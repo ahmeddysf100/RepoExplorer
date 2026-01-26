@@ -7,8 +7,9 @@ import type {
   LanguageWithPercent,
   Repo,
 } from '@/core/types/repo.types'
+import { config } from '@/shared/config'
 
-const octokit = new Octokit()
+const octokit = new Octokit(config.github.token ? { auth: config.github.token } : {})
 
 export interface SearchParams {
   sort?: 'stars' | 'forks' | 'updated'
@@ -38,7 +39,7 @@ export async function searchRepos(
   q: string,
   params: { sortOption?: SortOption; page?: number; per_page?: number } = {}
 ): Promise<SearchReposResponse> {
-  const { sortOption = 'best', page = 1, per_page = 12 } = params
+  const { sortOption = 'best', page = 1, per_page = config.searchPerPage } = params
   const { sort, order } = sortOptionToParams(sortOption)
   const { data } = await octokit.request('GET /search/repositories', {
     q,
@@ -94,7 +95,7 @@ export async function getRepoReadme(
 export async function getRepoCommits(
   owner: string,
   name: string,
-  per_page = 5
+  per_page = config.repoCommitsPerPage
 ): Promise<CommitItem[]> {
   const { data } = await octokit.request(
     'GET /repos/{owner}/{repo}/commits',
@@ -119,7 +120,7 @@ export async function getRepoCommits(
 export async function getRepoContributors(
   owner: string,
   name: string,
-  per_page = 5
+  per_page = config.repoContributorsPerPage
 ): Promise<ContributorItem[]> {
   const { data } = await octokit.request(
     'GET /repos/{owner}/{repo}/contributors',
