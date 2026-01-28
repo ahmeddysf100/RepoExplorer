@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import {
   Card,
   CardContent,
@@ -20,9 +21,9 @@ interface RepoCardProps {
   repo: Repo
 }
 
-export function RepoCard({ repo }: RepoCardProps) {
+export const RepoCard = memo(function RepoCard({ repo }: RepoCardProps) {
   const topics = repo.topics ?? []
-
+  console.log("render repo card", repo.owner.login)
   return (
     <Card
       variant="outlined"
@@ -179,4 +180,4 @@ export function RepoCard({ repo }: RepoCardProps) {
       </CardContent>
     </Card>
   )
-}
+})
