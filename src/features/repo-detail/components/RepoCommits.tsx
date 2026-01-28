@@ -3,6 +3,7 @@ import HistoryIcon from '@mui/icons-material/History'
 import { formatRelativeTime } from '@/shared/utils/format'
 import type { CommitItem } from '@/core/types/repo.types'
 import { config } from '@/shared/config'
+import { memo } from 'react'
 
 interface RepoCommitsProps {
   commits: CommitItem[]
@@ -10,7 +11,8 @@ interface RepoCommitsProps {
   name: string
 }
 
-export function RepoCommits({ commits, owner, name }: RepoCommitsProps) {
+export const RepoCommits = memo(function RepoCommits({ commits, owner, name }: RepoCommitsProps) {
+  // console.log("render repo commits", owner, name)
   const { baseUrl } = config.github
   const commitsUrl = `${baseUrl}/${owner}/${name}/commits`
 
@@ -119,4 +121,4 @@ export function RepoCommits({ commits, owner, name }: RepoCommitsProps) {
       )}
     </Card>
   )
-}
+})

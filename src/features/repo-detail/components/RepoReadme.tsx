@@ -3,13 +3,15 @@ import SubjectIcon from '@mui/icons-material/Subject'
 import EditIcon from '@mui/icons-material/Edit'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { memo } from 'react'
 
 interface RepoReadmeProps {
   readme: string
   readmeUrl: string
 }
 
-export function RepoReadme({ readme, readmeUrl }: RepoReadmeProps) {
+export const RepoReadme = memo(function RepoReadme({ readme, readmeUrl }: RepoReadmeProps) {
+  // console.log("render repo readme", readmeUrl)
   return (
     <Card
       variant="outlined"
@@ -240,4 +242,4 @@ export function RepoReadme({ readme, readmeUrl }: RepoReadmeProps) {
       </Box>
     </Card>
   )
-}
+})

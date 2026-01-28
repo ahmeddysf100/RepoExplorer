@@ -1,12 +1,14 @@
 import { Avatar, Box, Button, Card, Typography } from '@mui/material'
 import type { ContributorItem } from '@/core/types/repo.types'
+import { memo } from 'react'
 
 interface RepoContributorsProps {
   contributors: ContributorItem[]
   contributorsUrl: string
 }
 
-export function RepoContributors({ contributors, contributorsUrl }: RepoContributorsProps) {
+export const RepoContributors = memo(function RepoContributors({ contributors, contributorsUrl }: RepoContributorsProps) {
+  // console.log("render repo contributors", contributorsUrl)
   return (
     <Card variant="outlined" sx={{ p: 2, borderRadius: 2, borderColor: 'divider' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
@@ -87,4 +89,4 @@ export function RepoContributors({ contributors, contributorsUrl }: RepoContribu
       </Button>
     </Card>
   )
-}
+})

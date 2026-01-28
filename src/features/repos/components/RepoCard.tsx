@@ -23,7 +23,7 @@ interface RepoCardProps {
 
 export const RepoCard = memo(function RepoCard({ repo }: RepoCardProps) {
   const topics = repo.topics ?? []
-  console.log("render repo card", repo.owner.login)
+  // console.log("render repo card", repo.owner.login)
   return (
     <Card
       variant="outlined"

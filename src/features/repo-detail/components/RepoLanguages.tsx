@@ -1,14 +1,15 @@
 import { Box, Card, Typography } from '@mui/material'
 import { langColor } from '@/core'
 import type { LanguageWithPercent } from '@/core/types/repo.types'
+import { memo } from 'react'
 
 interface RepoLanguagesProps {
   languages: LanguageWithPercent[]
 }
 
-export function RepoLanguages({ languages }: RepoLanguagesProps) {
+export const RepoLanguages = memo(function RepoLanguages({ languages }: RepoLanguagesProps) {
   if (languages.length === 0) return null
-
+  // console.log("render repo languages", languages)
   return (
     <Card variant="outlined" sx={{ p: 2, borderRadius: 2, borderColor: 'divider' }}>
       <Typography
@@ -78,4 +79,4 @@ export function RepoLanguages({ languages }: RepoLanguagesProps) {
       </Box>
     </Card>
   )
-}
+})
