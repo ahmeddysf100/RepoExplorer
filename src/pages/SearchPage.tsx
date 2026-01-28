@@ -19,7 +19,7 @@ import {
 } from '@/core'
 import { config, maxSearchPage } from '@/shared/config'
 
-export function SearchPage() {
+export default function SearchPage() {
   const {
     query,
     setQuery,
