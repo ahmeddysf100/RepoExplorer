@@ -32,7 +32,7 @@ import {
 } from '@/features/repo-detail'
 import { config } from '@/shared/config'
 
-export function RepoDetailPage() {
+export default function RepoDetailPage() {
   const { owner, name } = useParams()
   const [repo, setRepo] = useState<Repo | null>(null)
   const [readme, setReadme] = useState<string | null>(null)
