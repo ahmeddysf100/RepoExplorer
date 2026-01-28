@@ -1,12 +1,13 @@
 import { Box, Card, Chip, Typography } from '@mui/material'
+import { memo } from 'react'
 
 interface RepoTopicsProps {
   topics: string[]
 }
 
-export function RepoTopics({ topics }: RepoTopicsProps) {
+export const RepoTopics = memo(function RepoTopics({ topics }: RepoTopicsProps) {
   if (topics.length === 0) return null
-
+  // console.log("render repo topics", topics)
   return (
     <Card variant="outlined" sx={{ p: 2, borderRadius: 2, borderColor: 'divider' }}>
       <Typography
@@ -43,4 +44,4 @@ export function RepoTopics({ topics }: RepoTopicsProps) {
       </Box>
     </Card>
   )
-}
+})
